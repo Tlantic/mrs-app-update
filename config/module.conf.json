@@ -1,0 +1,8 @@
+{
+	"module": "MRS.App.Update",
+	"endpoints": {
+		"check": {
+			"url": ""
+		}
+	}
+}

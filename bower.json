@@ -1,0 +1,38 @@
+{
+  "name": "mrs-app-update",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Tlantic/mrs-app-update",
+  "authors": [
+    "Tlantic MRS Team"
+  ],
+  "description": "Tlantic MRS App update for Apps",
+  "main": "./dist/mrs-app-update.js",
+  "keywords": [
+    "tlantic",
+    "mrs",
+    "app",
+    "settings"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "config",
+    "!module.conf.json",
+    "src",
+    "docs",
+    "scripts",
+    "test",
+    ".gitignore",
+    ".jshintrc",
+    "gruntfile.js"
+  ],
+  "dependencies": {
+    "mrs-app-device": "https://github.com/Tlantic/mrs-app-device.git#~1.0.0",
+    "mrs-app-core": "https://github.com/Tlantic/mrs-app-core.git#~1.1.3",
+    "mrs-app-clientdetector": "https://github.com/Tlantic/mrs-app-clientdetector.git#~1.0.0",
+    "angular": "~1.4.7",
+    "angular-mocks": "~1.4.7"
+  }
+}
