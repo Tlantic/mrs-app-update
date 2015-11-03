@@ -83,13 +83,37 @@ angular.module('MRS.App.Update').provider('MRSAppUpdate', function() {
             return _checkPromise !== undefined;
         };
         
+        // Run this when starting
         if ($config.check && $config.check.autoStart && $config.check.interval) {
             this.startChecking($config.check.interval);
         }
         
         return {
+            /**
+             * Start monitoring for update versions.
+             * When an invalid version is found, 
+             *  
+             * @method start
+             * @public
+             * @param {int} interval the interval time delay to check for updates
+             */
             start: self.startChecking,
+            
+            /**
+             * Check for updates on server.
+             * 
+             * @method check
+             * @public
+             * @return {object} object with valid property and latest version 
+             */
             check: self.checkForUpdates,
+            
+            /**
+             * Tells if the background service for checking is running.
+             * 
+             * @method isRunning
+             * @public
+             */
             isRunning: self.isRunning
         };
     }];

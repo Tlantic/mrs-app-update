@@ -30,7 +30,7 @@ angular.module("MyApp", ["MRS.App.Core", "MRS.App.Device", "MRS.App.Update"]);
 3. Configure your configuration file (see *config/module.conf.json*)
 ```JavaScript
 angular.module("MRS.App.Update").constant("$mrsappupdateConfig", {
-	
+	<your configuration here>
 });
 ```
 
@@ -41,43 +41,40 @@ This module is available by service.
 
 ### API
 
-#### MRSAppSettings
+#### MRSAppUpdate
 ```JavaScript
-angular.module("MyApp").controller("MyController", function(MRSAppSettings) {
+angular.module("MyApp").controller("MyController", function(MRSAppUpdate) {
     // your code here
 });
 ```
 
-##### check([modules]);
-This method checks for an update for a set of modules.
-
-It uses default modules in module settings if none is provided.
-
+##### start(interval)
 Params:
-- modules: a list of modules (strings) ```["module-A", "module-B", ...]```
+- interval: integer for update interval (in milliseconds)
 
-##### Example
+Start checking for version updates. If there are any proccess already running, stop and starts the new one.
+
+When an invalid version is found, broadcast a new event.
+
+
+###### Example
 ```JavaScript
-MRSAppSettings.check(); // will fetch server with default values
-MRSAppSettings.check(["my-module"]); // will fetch server with "my-module"
-``` 
+MRSAppSettings.start(); // will fetch server with default values
 
-##### Request to server
-A list of modules is sent in the data container, with *settings* property.
-```
-data: {
-    settings: ["module-A", "module-B", ...]
-}
+$rootScope.$on('MRS_APP_UPDATE.onInvalidVersion', function(latestVersion) {
+	// do something
+});
 ```
 
-##### Response from server
-The module expects to receive a list of modules settings objects.
 
-All module object must have a *module* property.
 
-```
-result: [
-    {"module": "module-A", ...},
-    {"module": "module-B", ...}
-]
+##### check()
+Check for an update. Returns an object with latest version and a flag if this version is valid or not.
+
+###### Example
+```JavaScript
+MRSAppSettings.check().then(function(result) {
+	console.log(result.valid);
+	console.log(result.latestVersion);
+});
 ```
