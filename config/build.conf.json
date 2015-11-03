@@ -1,0 +1,6 @@
+{
+    "moduleDeployFile"      : "mrs-app-update.js",
+    "minifiedDeployFile"    : "mrs-app-update.min.js",
+    "mapDeployFile"         : "mrs-app-update.min.js.map",
+    "obfuscate"             : true
+}
