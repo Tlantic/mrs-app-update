@@ -1,4 +1,4 @@
-/*! mrs-app-update - v1.0.0 - 2015-10-21 10:09:47 GMT */
+/*! mrs-app-update - v1.0.0 - 2015-11-03 12:35:06 GMT */
 /*global angular*/
 
 /**
@@ -70,7 +70,8 @@ angular.module('MRS.App.Update').provider('MRSAppUpdate', function() {
     'use strict';
     
     // local variables
-    var _updateEvent = 'MRS_APP_UPDATE.onUpdateAvailable',
+    var _invalidEvent = 'MRS_APP_UPDATE.onInvalidVersion', 
+        _updateEvent = 'MRS_APP_UPDATE.onUpdateAvailable',
         _checkPromise;
         
     var _appVersion;
@@ -109,8 +110,8 @@ angular.module('MRS.App.Update').provider('MRSAppUpdate', function() {
             // callback
             function intervalWrapper() {
                 self.checkForUpdates().then(function onCheckComplete(result) {
-                    if (result) {
-                        $events.publish(_updateEvent);   
+                    if (result && result.valid === false) {
+                        $events.publish(_invalidEvent, result.latestVersion);   
                     }
                 });
             }
@@ -144,13 +145,37 @@ angular.module('MRS.App.Update').provider('MRSAppUpdate', function() {
             return _checkPromise !== undefined;
         };
         
+        // Run this when starting
         if ($config.check && $config.check.autoStart && $config.check.interval) {
             this.startChecking($config.check.interval);
         }
         
         return {
+            /**
+             * Start monitoring for update versions.
+             * When an invalid version is found, 
+             *  
+             * @method start
+             * @public
+             * @param {int} interval the interval time delay to check for updates
+             */
             start: self.startChecking,
+            
+            /**
+             * Check for updates on server.
+             * 
+             * @method check
+             * @public
+             * @return {object} object with valid property and latest version 
+             */
             check: self.checkForUpdates,
+            
+            /**
+             * Tells if the background service for checking is running.
+             * 
+             * @method isRunning
+             * @public
+             */
             isRunning: self.isRunning
         };
     }];
