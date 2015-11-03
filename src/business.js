@@ -9,7 +9,8 @@ angular.module('MRS.App.Update').provider('MRSAppUpdate', function() {
     'use strict';
     
     // local variables
-    var _updateEvent = 'MRS_APP_UPDATE.onUpdateAvailable',
+    var _invalidEvent = 'MRS_APP_UPDATE.onInvalidVersion', 
+        _updateEvent = 'MRS_APP_UPDATE.onUpdateAvailable',
         _checkPromise;
         
     var _appVersion;
@@ -48,8 +49,8 @@ angular.module('MRS.App.Update').provider('MRSAppUpdate', function() {
             // callback
             function intervalWrapper() {
                 self.checkForUpdates().then(function onCheckComplete(result) {
-                    if (result) {
-                        $events.publish(_updateEvent);   
+                    if (result && result.valid == false) {
+                        $events.publish(_invalidEvent, result.latestVersion);   
                     }
                 });
             }
