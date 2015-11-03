@@ -49,7 +49,7 @@ angular.module('MRS.App.Update').provider('MRSAppUpdate', function() {
             // callback
             function intervalWrapper() {
                 self.checkForUpdates().then(function onCheckComplete(result) {
-                    if (result && result.valid == false) {
+                    if (result && result.valid === false) {
                         $events.publish(_invalidEvent, result.latestVersion);   
                     }
                 });

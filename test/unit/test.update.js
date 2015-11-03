@@ -17,12 +17,12 @@ describe('MRS.U:', function () {
             status: 'OK',
             result: {
                 latestVersion: '1.0.0',
-                valid: true
+                valid: false
             }
         },
         validResponseData = {
             latestVersion: '1.0.0',
-            valid: true
+            valid: false
         };
     
     describe('update service:', function() {
